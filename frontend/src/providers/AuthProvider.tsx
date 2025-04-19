@@ -2,6 +2,7 @@ import { axiosInstance } from "@/lib/axios";
 import { useAuth } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 // Cập nhật Authorization header trong axiosInstance.
 const updateApiToken = (token: string | null) => {
@@ -16,12 +17,15 @@ const updateApiToken = (token: string | null) => {
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { getToken, userId } = useAuth();
   const [loading, setLoading] = useState(true);
-
+  const { checkAdminStatus } = useAuthStore;
   useEffect(() => {
     const initAuth = async () => {
       try {
         const token = await getToken(); // Lấy token từ Clerk
         updateApiToken(token); // Gắn token vào axios header
+        if (token) {
+          await checkAdminStatus();
+        }
       } catch (error: any) {
         updateApiToken(null); // Nếu lỗi thì xóa token
         console.log("Error in auth provider", error);
@@ -31,7 +35,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     initAuth();
-  }, [getToken, userId]);
+  }, [getToken, userId, checkAdminStatus]);
 
   if (loading) {
     return (
