@@ -8,7 +8,7 @@ interface MusicStore {
   isLoading: boolean;
   error: string | null;
   currentAlbum: Album | null;
-  featuredSongs: Album[];
+  featuredSongs: Song[];
   madeForYouSongs: Song[];
   trendingSongs: Song[];
 
