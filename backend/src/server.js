@@ -30,7 +30,7 @@ app.use(express.json()); // To parse req.body
 app.use(clerkMiddleware()); // This will add auth to req obj => req.auth.userId
 app.use(
   fileUpload({
-    useTemFiles: true,
+    useTempFiles: true,
     tempFileDir: path.join(__dirname, "tmp"),
     createParentPath: true,
     limits: {
