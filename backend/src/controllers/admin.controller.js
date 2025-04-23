@@ -91,7 +91,7 @@ export const createAlbum = async (req, res, next) => {
 
     await album.save();
 
-    res.status(201).json(song);
+    res.status(201).json(album);
   } catch (error) {
     console.log("Error in creating album", error);
     next(error);
@@ -105,9 +105,9 @@ export const deleteAlbum = async (req, res, next) => {
     await Song.deleteMany({ albumId: id });
     await Album.findByIdAndDelete(id);
 
-    res.status(200).json({ message: "Song deleted successfully" });
+    res.status(200).json({ message: "Album deleted successfully" });
   } catch (error) {
-    console.log("Error in delete song", error);
+    console.log("Error in delete album", error);
     next(error);
   }
 };
