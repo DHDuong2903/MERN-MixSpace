@@ -20,9 +20,9 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
 
         <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/chat" element={<ChatPage />}></Route>
-          <Route path="/albums/:albumId" element={<AlbumPage />}></Route>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/albums/:albumId" element={<AlbumPage />} />
         </Route>
       </Routes>
       <Toaster />
