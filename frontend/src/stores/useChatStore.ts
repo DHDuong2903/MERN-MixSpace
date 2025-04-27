@@ -124,7 +124,10 @@ export const useChatStore = create<ChatStore>((set, get) => ({
       const response = await axiosInstance.get(`/user/messages/${userId}`);
       set({ messages: response.data });
     } catch (error: any) {
-      set({ error: error.response.data.message });
+      if (error.response?.status === 304) {
+        return;
+      }
+      set({ error: error.response.data.message || "Something went wrong" });
     } finally {
       set({ isLoading: false });
     }
