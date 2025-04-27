@@ -91,7 +91,7 @@ const AddSongDialog = () => {
   return (
     <Dialog open={songDialogOpen} onOpenChange={setSongDialogOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-emerald-500 hover:bg-emerald-600 text-black cursor-pointer">
+        <Button className="bg-emerald-500 hover:bg-emerald-600 text-white cursor-pointer">
           <Plus className="mr-2 h-4 w-4" />
           Add Song
         </Button>
@@ -204,10 +204,15 @@ const AddSongDialog = () => {
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => setSongDialogOpen(false)} disabled={isLoading}>
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            onClick={() => setSongDialogOpen(false)}
+            disabled={isLoading}
+          >
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={isLoading}>
+          <Button className="cursor-pointer text-white" onClick={handleSubmit} disabled={isLoading}>
             {isLoading ? "Uploading..." : "Add Song"}
           </Button>
         </DialogFooter>

@@ -7,6 +7,7 @@ import SongsTabContent from "./components/SongsTabContent";
 import AlbumsTabContent from "./components/AlbumsTabContent";
 import { useEffect } from "react";
 import { useMusicStore } from "@/stores/useMusicStore";
+import NotFoundPage from "../404/NotFoundPage";
 
 const AdminPage = () => {
   const { isAdmin, isLoading } = useAuthStore();
@@ -18,7 +19,9 @@ const AdminPage = () => {
     fetchStats();
   }, [fetchAlbums, fetchSongs, fetchStats]);
 
-  if(!isAdmin && !isLoading) return <div>Unauthorized</div>
+  if (!isAdmin && !isLoading) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-900 to-black text-zinc-100 p-8">
