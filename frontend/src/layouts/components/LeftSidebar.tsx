@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { SignedIn } from "@clerk/clerk-react";
-import { HomeIcon, Library, MessageCircle } from "lucide-react";
+import { Headphones, HomeIcon, Library, MessageCircle } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -32,6 +32,19 @@ const LeftSidebar = () => {
           >
             <HomeIcon className="mr-2 size-5" />
             <span className="hidden md:inline">Home</span>
+          </Link>
+
+          <Link
+            to={"/favorites"}
+            className={cn(
+              buttonVariants({
+                variant: "ghost",
+                className: "w-full justify-start text-white hover:bg-zinc-800",
+              })
+            )}
+          >
+            <Headphones className="mr-2 size-5" />
+            <span className="hidden md:inline">Favourites</span>
           </Link>
 
           <SignedIn>

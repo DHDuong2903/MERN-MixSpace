@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { usePlayerStore } from "@/stores/usePlayerStore";
-import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from "lucide-react";
+import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const formatTime = (seconds: number) => {
@@ -52,7 +53,7 @@ export const PlaybackControls = () => {
   return (
     <footer className="h-20 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-4">
       <div className="flex justify-between items-center h-full max-w-[1800px] mx-auto">
-        {/* currently playing song */}
+        {/* Bai hat dang phat */}
         <div className="hidden sm:flex items-center gap-4 min-w-[180px] w-[30%]">
           {currentSong && (
             <>
@@ -67,43 +68,80 @@ export const PlaybackControls = () => {
           )}
         </div>
 
-        {/* player controls*/}
+        {/* Dieu khien phat nhac*/}
         <div className="flex flex-col items-center gap-2 flex-1 max-w-full sm:max-w-[45%]">
           <div className="flex items-center gap-4 sm:gap-6">
-            <Button size="icon" variant="ghost" className="hidden sm:inline-flex hover:text-white text-zinc-400">
-              <Shuffle className="h-4 w-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="ghost" className="hidden sm:inline-flex hover:text-white text-zinc-400">
+                  <Shuffle className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Mix Song</p>
+              </TooltipContent>
+            </Tooltip>
 
-            <Button
-              size="icon"
-              variant="ghost"
-              className="hover:text-white text-zinc-400 cursor-pointer"
-              onClick={playPrevious}
-              disabled={!currentSong}
-            >
-              <SkipBack className="h-4 w-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="hover:text-white text-zinc-400 cursor-pointer"
+                  onClick={playPrevious}
+                  disabled={!currentSong}
+                >
+                  <SkipBack className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Prev Song</p>
+              </TooltipContent>
+            </Tooltip>
 
-            <Button
-              size="icon"
-              className="bg-white hover:bg-white/80 cursor-pointer text-black rounded-full h-8 w-8"
-              onClick={togglePlay}
-              disabled={!currentSong}
-            >
-              {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-            </Button>
-            <Button
-              size="icon"
-              variant="ghost"
-              className="hover:text-white text-zinc-400 cursor-pointer"
-              onClick={playNext}
-              disabled={!currentSong}
-            >
-              <SkipForward className="h-4 w-4" />
-            </Button>
-            <Button size="icon" variant="ghost" className="hidden sm:inline-flex hover:text-white text-zinc-400">
-              <Repeat className="h-4 w-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="icon"
+                  className="bg-white hover:bg-white/80 cursor-pointer text-black rounded-full h-8 w-8"
+                  onClick={togglePlay}
+                  disabled={!currentSong}
+                >
+                  {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{isPlaying ? "Pause" : "Play"}</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="hover:text-white text-zinc-400 cursor-pointer"
+                  onClick={playNext}
+                  disabled={!currentSong}
+                >
+                  <SkipForward className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Next Song</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="ghost" className="hidden sm:inline-flex hover:text-white text-zinc-400">
+                  <Repeat className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Replay</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
 
           <div className="hidden sm:flex items-center gap-2 w-full">
@@ -120,20 +158,35 @@ export const PlaybackControls = () => {
         </div>
         {/* volume controls */}
         <div className="hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end">
-          <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
-            <Mic2 className="h-4 w-4" />
-          </Button>
-          <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400 cursor-pointer">
+                <Mic2 className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Lyrics</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Button size="icon" variant="ghost" className="hidden md:inline-flex hover:text-white text-zinc-400">
             <ListMusic className="h-4 w-4" />
           </Button>
-          <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
+          <Button size="icon" variant="ghost" className="hidden md:inline-flex hover:text-white text-zinc-400">
             <Laptop2 className="h-4 w-4" />
           </Button>
 
           <div className="flex items-center gap-2">
-            <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400">
-              <Volume1 className="h-4 w-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button size="icon" variant="ghost" className="hover:text-white text-zinc-400 cursor-pointer">
+                  <Volume2 className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Sound</p>
+              </TooltipContent>
+            </Tooltip>
 
             <Slider
               value={[volume]}

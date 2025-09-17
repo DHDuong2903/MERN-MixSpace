@@ -1,6 +1,6 @@
 import Topbar from "@/components/Topbar";
 import { useChatStore } from "@/stores/useChatStore";
-import { useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import UsersList from "./components/UsersList";
 import ChatHeader from "./components/ChatHeader";
@@ -20,6 +20,8 @@ const ChatPage = () => {
   const { user } = useUser();
   const { messages, selectedUser, fetchUsers, fetchMessages } = useChatStore();
 
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (user) fetchUsers();
   }, [fetchUsers, user]);
@@ -27,6 +29,13 @@ const ChatPage = () => {
   useEffect(() => {
     if (selectedUser) fetchMessages(selectedUser.clerkId);
   }, [selectedUser, fetchMessages]);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   return (
     <main className="h-full rounded-lg bg-gradient-to-b from-zinc-800 to-zinc-900 overflow-hidden">
       <Topbar />
@@ -62,6 +71,8 @@ const ChatPage = () => {
                       </div>
                     </div>
                   ))}
+
+                  <div ref={messagesEndRef} />
                 </div>
               </ScrollArea>
 
@@ -80,7 +91,7 @@ export default ChatPage;
 
 const NoConversationPlaceholder = () => (
   <div className="flex flex-col items-center justify-center h-full space-y-6">
-    <img src="/spotify.png" alt="Spotify" className="size-16 animate-bounce" />
+    <img src="/mixspace.png" alt="MixSpace" className="size-16 animate-bounce" />
     <div className="text-center">
       <h3 className="text-zinc-300 text-lg font-medium mb-1">No conversation selected</h3>
       <p className="text-zinc-500 text-sm">Choose a friend to start chatting</p>

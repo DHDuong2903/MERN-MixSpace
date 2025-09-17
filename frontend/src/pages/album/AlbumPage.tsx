@@ -103,7 +103,7 @@ const AlbumPage = () => {
                 </div>
               </div>
 
-              {/* songs list */}
+              {/* Songs list */}
 
               <div className="px-6">
                 <div className="space-y-2 py-4">

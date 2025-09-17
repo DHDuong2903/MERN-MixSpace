@@ -2,6 +2,7 @@ import { Song } from "@/types";
 import SectionGridSkeleton from "./SectionGridSkeleton";
 import { Button } from "@/components/ui/button";
 import PlayButton from "./PlayButton";
+import AddButton from "@/pages/favorite/components/AddButton";
 
 type SectionGridProps = {
   title: string;
@@ -22,10 +23,7 @@ const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {songs.map((song) => (
-          <div
-            key={song._id}
-            className="bg-zinc-800/40 p-4 rounded-md hover:bg-zinc-700/40 transition-all group"
-          >
+          <div key={song._id} className="bg-zinc-800/40 p-4 rounded-md hover:bg-zinc-700/40 transition-all group">
             <div className="relative mb-4">
               <div className="aspect-square rounded-md shadow-lg overflow-hidden">
                 <img
@@ -35,6 +33,8 @@ const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
                 />
                 {/* Add play button */}
                 <PlayButton song={song} />
+
+                <AddButton song={song} />
               </div>
             </div>
             <h3 className="font-medium mb-2 truncate">{song.title}</h3>

@@ -93,7 +93,7 @@ const AddAlbumDialog = () => {
                 <Upload className="h-6 w-6 text-zinc-400" />
               </div>
               <div className="text-sm text-zinc-400 mb-2">{imageFile ? imageFile.name : "Upload album artwork"}</div>
-              <Button variant="outline" size="sm" className="text-xs">
+              <Button variant="outline" size="sm" className="text-xs cursor-pointer">
                 Choose File
               </Button>
             </div>
@@ -116,8 +116,8 @@ const AddAlbumDialog = () => {
               placeholder="Enter artist name"
             />
           </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Release Year</label>
+          <div className="space-y-2 ">
+            <label className="text-sm font-medium ">Release Year</label>
             <Input
               type="number"
               value={newAlbum.releaseYear}
@@ -130,7 +130,12 @@ const AddAlbumDialog = () => {
           </div>
         </div>
         <DialogFooter>
-          <Button className="cursor-pointer" variant="outline" onClick={() => setAlbumDialogOpen(false)} disabled={isLoading}>
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            onClick={() => setAlbumDialogOpen(false)}
+            disabled={isLoading}
+          >
             Cancel
           </Button>
           <Button
