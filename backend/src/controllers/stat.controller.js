@@ -15,12 +15,14 @@ export const getStats = async (req, res, next) => {
       // $count: "count": đếm số lượng nhóm → chính là số nghệ sĩ khác nhau.
       Song.aggregate([
         {
+          // $unionWith để kết hợp dữ liệu từ collection ( gop albums voi songs thanh 1 luong du lieu)
           $unionWith: {
             coll: "albums",
             pipeline: [],
           },
         },
         {
+          // Nhóm theo artist để loại bỏ trùng
           $group: {
             _id: "$artist",
           },

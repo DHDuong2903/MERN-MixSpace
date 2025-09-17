@@ -1,12 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
-import { clerkMiddleware } from "@clerk/express";
-import fileUpload from "express-fileupload";
-import path from "path";
 import cors from "cors";
-import fs from "fs";
-import { createServer } from "http";
-import cron from "node-cron";
+import { clerkMiddleware } from "@clerk/express";
+import fileUpload from "express-fileupload"; // Middleware xu ly upload file( them truong files vao req)
+import path from "path"; // Xu ly duong dan file/folder
+import fs from "fs"; // Doc/Ghi/Xoa file he thong
+import cron from "node-cron"; // Tao cac cong viec dinh ky
+import { createServer } from "http"; // Tao server http (socket)
 
 import { initializeSocket } from "./lib/socket.js";
 
@@ -20,34 +20,37 @@ import { connectDB } from "./lib/db.js";
 
 dotenv.config();
 
-const __dirname = path.resolve();
+// Khoi tao app va server
+const __dirname = path.resolve(); // Duong dan thu muc goc cua project
 const app = express();
 const PORT = process.env.PORT;
+const httpServer = createServer(app); // Tao server http
+initializeSocket(httpServer); // Khoi tao socket
 
-const httpServer = createServer(app);
-initializeSocket(httpServer);
-
+// Cau hinh middleware
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
   })
 );
-
-app.use(express.json()); // To parse req.body
-app.use(clerkMiddleware()); // This will add auth to req obj => req.auth.userId
+app.use(express.json());
+app.use(clerkMiddleware()); // Them thong tin xac thuc vao request (Them truong auth vao req)
 app.use(
   fileUpload({
     useTempFiles: true,
-    tempFileDir: path.join(__dirname, "tmp"),
+    tempFileDir: path.join(__dirname, "tmp"), // Luu file tam vao thu muc tmp
     createParentPath: true,
     limits: {
-      fileSize: 10 * 1024 * 1024, // 10MB max file size
+      fileSize: 10 * 1024 * 1024, // Gioi han dung luong 10MB
     },
   })
 );
-const tempDir = path.join(process.cwd(), "tmp");
-// Cron jobs
+
+// Dinh nghia thu muc tam
+const tempDir = path.join(process.cwd(), "tmp"); // Duong dan thu muc luu file tam
+
+// Cron jobs: Xoa dinh ky moi gio cac file tam trong thu muc tmp de tranh day bo nho
 cron.schedule("0 * * * *", () => {
   if (fs.existsSync(tempDir)) {
     fs.readdir(tempDir, (err, files) => {
@@ -61,8 +64,8 @@ cron.schedule("0 * * * *", () => {
     });
   }
 });
-// Delete those files in every 1 hour
 
+// Dinh nghia cac route
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
@@ -70,6 +73,7 @@ app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statRoutes);
 
+// Phuc vu frontend trong production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
   app.get("*", (req, res) => {
@@ -77,10 +81,12 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// Xu ly loi phu hop voi moi truong
 app.use((err, req, res, next) => {
   res.status(500).json({ message: process.env.NODE_ENV === "production" ? "Internal server error" : err.message });
 });
 
+// Ket noi database va khoi dong server
 httpServer.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   connectDB();

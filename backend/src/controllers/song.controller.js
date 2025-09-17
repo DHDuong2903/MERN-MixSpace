@@ -2,7 +2,7 @@ import { Song } from "../models/song.model.js";
 
 export const getAllSongs = async (req, res, next) => {
   try {
-    // -1 : Newest -> Oldest
+    // -1 : Lay bai moi nhat => bai cu nhat
     const songs = await Song.find().sort({ createdAt: -1 });
     res.json(songs);
   } catch (error) {
@@ -12,11 +12,12 @@ export const getAllSongs = async (req, res, next) => {
 
 export const getFeaturedSongs = async (req, res, next) => {
   try {
-    // fetch 6 random songs using mongodb's aggregation pipeline
+    // Lay 6 bai hat ngau nhien
     const songs = await Song.aggregate([
-      { $sample: { size: 6 } },
+      { $sample: { size: 6 } }, // $sample: Lay ngau nhien 6 bai hat
       {
         $project: {
+          // $project: Chi lay nhung truong can thiet
           _id: 1,
           title: 1,
           artist: 1,
@@ -34,7 +35,6 @@ export const getFeaturedSongs = async (req, res, next) => {
 
 export const getMadeForYouSongs = async (req, res, next) => {
   try {
-    // fetch 6 random songs using mongodb's aggregation pipeline
     const songs = await Song.aggregate([
       { $sample: { size: 4 } },
       {
@@ -56,7 +56,6 @@ export const getMadeForYouSongs = async (req, res, next) => {
 
 export const getTrendingSongs = async (req, res, next) => {
   try {
-    // fetch 6 random songs using mongodb's aggregation pipeline
     const songs = await Song.aggregate([
       { $sample: { size: 4 } },
       {
