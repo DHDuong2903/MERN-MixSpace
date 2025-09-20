@@ -25,7 +25,12 @@ export const useFavoriteStore = create<FavoritesStore>((set, get) => ({
       set({ favorites: res.data });
     } catch (err: any) {
       console.error(err);
-      toast.error("Failed to load favourites");
+      // Nếu lỗi là 404 hoặc response không có bài hát thì không toast lỗi
+      if (err.response && err.response.status === 404) {
+        set({ favorites: [] });
+      } else {
+        toast.error("Failed to load favourites");
+      }
     } finally {
       set({ isLoading: false });
     }

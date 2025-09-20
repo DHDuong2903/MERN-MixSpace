@@ -53,3 +53,19 @@ export const getTrendingSongs = async (req, res, next) => {
     next(error);
   }
 };
+
+export const searchSongs = async (req, res, next) => {
+  try {
+    const q = req.query.q || ""; // từ khóa tìm kiếm
+
+    const songs = await Song.find({
+      $or: [{ title: { $regex: q, $options: "i" } }, { artist: { $regex: q, $options: "i" } }],
+    })
+      .select("_id title artist imageUrl audioUrl duration")
+      .collation({ locale: "vi", strength: 1 });
+
+    res.json(songs);
+  } catch (error) {
+    next(error);
+  }
+};

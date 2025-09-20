@@ -103,7 +103,7 @@ export const PlaybackControls = () => {
               <TooltipTrigger asChild>
                 <Button
                   size="icon"
-                  className="bg-white hover:bg-white/80 cursor-pointer text-black rounded-full h-8 w-8"
+                  className=" border-2 border-zinc-400 bg-transparent cursor-pointer text-zinc-400 rounded-full h-9 w-9"
                   onClick={togglePlay}
                   disabled={!currentSong}
                 >

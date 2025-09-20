@@ -91,7 +91,7 @@ const LoginPrompt = () => (
     </div>
 
     <div className="space-y-2 max-w-[250px]">
-      <h3 className="text-lg font-semibold text-white">See What Friends Are Playing</h3>
+      <h3 className="text-lg font-semibold text-white">See What Friends Are Doing</h3>
       <p className="text-sm text-zinc-400">Login to discover what music your friends are enjoying right now</p>
     </div>
   </div>

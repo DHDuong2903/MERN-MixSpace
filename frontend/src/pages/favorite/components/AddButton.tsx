@@ -25,7 +25,11 @@ const AddButton = ({ song }: AddButtonProps) => {
         absolute bottom-3 right-12 cursor-pointer
         opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0
         transition-all hover:scale-105
-        ${isFav ? "bg-red-500 text-white hover:bg-red-500" : "bg-zinc-700 text-white hover:bg-red-500"}
+        ${
+          isFav
+            ? "bg-red-500 text-white hover:bg-red-500"
+            : "bg-zinc-800  text-white hover:bg-red-500"
+        }
       `}
     >
       <Heart className="size-5" />

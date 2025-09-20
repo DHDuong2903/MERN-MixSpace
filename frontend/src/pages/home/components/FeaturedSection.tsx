@@ -2,6 +2,7 @@ import FeaturedGridSkeleton from "@/components/skeletons/FeatureGridSkeleton";
 import { useMusicStore } from "@/stores/useMusicStore";
 import PlayButton from "./PlayButton";
 import AddButton from "@/pages/favorite/components/AddButton";
+import { SignedIn } from "@clerk/clerk-react";
 
 const FeaturedSection = () => {
   const { isLoading, featuredSongs, error } = useMusicStore();
@@ -26,7 +27,9 @@ const FeaturedSection = () => {
           <PlayButton song={song} />
 
           {/* Favourite button */}
-          <AddButton song={song} />
+          <SignedIn>
+            <AddButton song={song} />
+          </SignedIn>
         </div>
       ))}
     </div>

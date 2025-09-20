@@ -77,13 +77,13 @@ const AlbumPage = () => {
               <Button
                 onClick={handlePlayAlbum}
                 size="icon"
-                className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-400 
-                hover:scale-105 transition-all cursor-pointer"
+                className="w-14 h-14 rounded-full bg-transparent hover:bg-none
+                hover:scale-105 transition-all cursor-pointer border-2 border-green-500/80"
               >
                 {isPlaying && currentAlbum?.songs.some((song) => song._id === currentSong?._id) ? (
-                  <Pause className="h-7 w-7 text-black" />
+                  <Pause className="h-7 w-7 text-green-500/80" />
                 ) : (
-                  <Play className="h-7 w-7 text-black" />
+                  <Play className="h-7 w-7 text-green-500/80" />
                 )}
               </Button>
             </div>
