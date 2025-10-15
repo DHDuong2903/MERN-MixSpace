@@ -34,9 +34,21 @@ export const initializeSocket = (server) => {
     });
 
     // Cap nhat hoat dong hien tai cua user
-    socket.on("update_activity", (userId, activity) => {
-      userActivities.set(userId, activity);
-      io.emit("activity_updated", { userId, activity });
+    socket.on("update_activity", (arg1, arg2) => {
+      // Hỗ trợ cả 2 dạng: emit(object) hoặc emit(userId, activity)
+      let userId;
+      let activity;
+      if (typeof arg1 === "object" && arg1 !== null) {
+        ({ userId, activity } = arg1);
+      } else {
+        userId = arg1;
+        activity = arg2;
+      }
+
+      if (userId) {
+        userActivities.set(userId, activity);
+        io.emit("activity_updated", { userId, activity });
+      }
     });
 
     // Xu ly khi user gui tin nhan

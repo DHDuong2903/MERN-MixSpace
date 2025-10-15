@@ -3,11 +3,24 @@ import { usePlayerStore } from "@/stores/usePlayerStore";
 import { Song } from "@/types";
 import { Pause, Play } from "lucide-react";
 
-const PlayButton = ({ song }: { song: Song }) => {
-  const { currentSong, isPlaying, setCurrentSong, togglePlay } = usePlayerStore();
+interface PlayButtonProps {
+  song: Song;
+  // optional: nếu được truyền, PlayButton sẽ phát toàn bộ danh sách này (dùng playAlbum)
+  playList?: Song[];
+  playIndex?: number;
+}
+
+const PlayButton = ({ song, playList, playIndex = 0 }: PlayButtonProps) => {
+  const { currentSong, isPlaying, setCurrentSong, togglePlay, playAlbum } = usePlayerStore();
   const isCurrentSong = currentSong?._id === song._id;
 
   const handlePlay = () => {
+    if (playList) {
+      // phát tuần tự trong danh sách được truyền (dành cho Favorites)
+      playAlbum(playList, playIndex);
+      return;
+    }
+
     if (isCurrentSong) togglePlay();
     else setCurrentSong(song);
   };

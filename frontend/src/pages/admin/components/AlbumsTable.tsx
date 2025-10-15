@@ -1,3 +1,14 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useMusicStore } from "@/stores/useMusicStore";
@@ -45,14 +56,32 @@ const AlbumsTable = () => {
             </TableCell>
             <TableCell className="text-right">
               <div className="flex gap-2 justify-end">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => deleteAlbum(album._id)}
-                  className="text-red-400 hover:text-red-300 hover:bg-red-400/10 cursor-pointer"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant={"ghost"}
+                      size={"sm"}
+                      className="text-red-400 hover:text-red-300 hover:bg-red-400/10 cursor-pointer"
+                    >
+                      <Trash2 className="size-4" />
+                    </Button>
+                  </AlertDialogTrigger>
+
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className="text-white">Are you sure to delete {album.title}?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This cannot be undone. The data will be completely erased.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="text-white cursor-pointer">Cancel</AlertDialogCancel>
+                      <AlertDialogAction className="text-white cursor-pointer" onClick={() => deleteAlbum(album._id)}>
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </TableCell>
           </TableRow>

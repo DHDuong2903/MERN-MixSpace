@@ -36,7 +36,7 @@ const FavoritesPage = () => {
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {favorites.map((song) => (
+            {favorites.map((song, index) => (
               <div
                 key={song._id}
                 className="flex items-center bg-zinc-800/50 rounded-md overflow-hidden hover:bg-zinc-700/50 transition-colors group relative"
@@ -52,7 +52,7 @@ const FavoritesPage = () => {
                 </div>
 
                 {/* Play button */}
-                <PlayButton song={song} />
+                <PlayButton song={song} playList={favorites} playIndex={index} />
 
                 {/* Toggle Favorite */}
                 <AddButton song={song} />
