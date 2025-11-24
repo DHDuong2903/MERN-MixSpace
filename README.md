@@ -1,98 +1,67 @@
-# MixSpace Web
+## MixSpace
 
-MixSpace là một dự án web nghe nhạc hiện đại sử dụng MERN Stack (MongoDB, Express, React, Node.js).  
-Dự án hỗ trợ các tính năng: tìm kiếm bài hát, phát nhạc, quản lý album, chat, đăng nhập bằng Clerk, thêm bài hát vào yêu thích, và nhiều tính năng khác.
+MixSpace là nền tảng nghe nhạc trực tuyến hiện đại, phát triển với React (frontend) và Node.js/Express (backend), sử dụng MongoDB lưu trữ, xác thực JWT, Cloudinary lưu trữ media, Socket.io cho chat realtime. Dự án hướng tới trải nghiệm giải trí tối ưu, bảo mật, dễ mở rộng và quản trị.
 
-## Cấu trúc thư mục
+## Kiến trúc dự án
 
-```
-MixSpace-web/
-│
-├── backend/      # Source code server Node.js + Express + MongoDB
-├── frontend/     # Source code client React + Vite + Clerk
-├── README.md     # Tài liệu dự án
-```
-
-## Yêu cầu hệ thống
-
-- Node.js >= 20.x
-- MongoDB (local hoặc cloud)
-- Tài khoản Clerk (https://clerk.com/) để xác thực người dùng
-
-## Hướng dẫn cài đặt
-
-### 1. Clone dự án
-
-```bash
-git clone https://github.com/your-username/MixSpace-web.git
-cd MixSpace-web
-```
-
-### 2. Cài đặt dependencies
-
-```bash
-npm install --prefix backend
-npm install --prefix frontend
-```
-
-### 3. Thiết lập biến môi trường
-
-Tạo file `.env` trong thư mục `backend` với nội dung:
-
-```
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/mixspace
-CLOUDINARY_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-NODE_ENV=development
-```
-
-Tạo file `.env` trong thư mục `frontend` với nội dung:
-
-```
-VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-```
-
-### 4. Seed dữ liệu mẫu (tuỳ chọn)
-
-Chạy lệnh seed để tạo dữ liệu mẫu:
-
-```bash
-npm run seed:songs --prefix backend
-npm run seed:albums --prefix backend
-```
-
-### 5. Khởi động dự án
-
-Chạy backend:
-
-```bash
-npm run dev --prefix backend
-```
-
-Chạy frontend:
-
-```bash
-npm run dev --prefix frontend
-```
-
-Truy cập website tại [http://localhost:3000](http://localhost:3000)
+- Monorepo gồm hai phần:
+  - `frontend`: React + Vite, TypeScript, TailwindCSS, Radix UI
+  - `backend`: Node.js, Express, MongoDB, JWT, Cloudinary, Socket.io
+- Xác thực người dùng với JWT
+- Quản lý media (ảnh, nhạc) qua Cloudinary
+- Chat realtime qua Socket.io
+- Quản lý trạng thái frontend bằng hooks, context
+- Giao tiếp backend qua REST API
 
 ## Tính năng chính
 
-- Đăng nhập/Đăng ký bằng Clerk
-- Tìm kiếm bài hát theo tên hoặc tác giả
-- Phát nhạc, chuyển bài, phát album
-- Thêm bài hát vào danh sách yêu thích
-- Quản lý album, bài hát
+- Đăng nhập/đăng ký bảo mật qua JWT
+- Quản lý người dùng, phân quyền admin/người dùng
+- Quản lý album, bài hát: thêm/sửa/xóa, upload ảnh cover và file nhạc
+- Tìm kiếm, lọc, phân trang danh sách album, bài hát, người dùng
+- Nghe nhạc trực tuyến, điều khiển phát nhạc (play, pause, next, previous)
 - Chat realtime giữa người dùng
-- Thống kê số lượng bài hát, album, nghệ sĩ, người dùng
-- Upload ảnh, audio qua Cloudinary
+- Quản trị: thống kê số lượng người dùng, album, bài hát, hiển thị bảng và biểu đồ
+- Quick Actions: thêm album, thêm bài hát, quản lý người dùng
+- Trang quản trị cho admin: quản lý nội dung, người dùng, thống kê
+
+## Cài đặt nhanh
+
+### Yêu cầu hệ thống
+
+- Node.js >= 18.x
+- MongoDB
+- Tài khoản Cloudinary
+
+### Các bước cài đặt
+
+```bash
+git clone https://github.com/DHDuong2903/MERN-Spotify.git
+cd MixSpace-web
+npm install
+cd backend
+npm install
+cd ../frontend
+npm install
+```
+
+Tạo file `.env` cho backend và `.env` cho frontend theo mẫu, điền các thông tin API key cho Cloudinary, MongoDB URI, JWT secret.
+
+### Khởi động
+
+```bash
+# Khởi động backend
+cd backend
+npm run dev
+
+# Khởi động frontend
+cd ../frontend
+npm run dev
+```
+
+Truy cập: [http://localhost:5173](http://localhost:5173)
 
 ## Công nghệ sử dụng
 
-- **Frontend:** React, Vite, Clerk, TailwindCSS, Radix UI
-- **Backend:** Node.js, Express, MongoDB, Mongoose, Socket.io, Cloudinary
-- **Realtime:** Socket.io
-- **Xác thực:** Clerk
+- Frontend: React, Vite, TypeScript, TailwindCSS, Radix UI, Axios
+- Backend: Node.js, Express, MongoDB, JWT, Cloudinary, Socket.io
